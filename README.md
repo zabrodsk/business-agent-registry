@@ -1,3 +1,13 @@
+# Superseded: use the unified hackathon repository
+
+The registry now lives in **[zabrodsk/pneu007-business](https://github.com/zabrodsk/pneu007-business)** alongside the autoshop website/backend, bookings, A2A transport, GrokBot tools and skills, audit/rulebooks, and Masumi payment integration.
+
+Continue development and deploy both services from that single repository. See its [registry instructions](https://github.com/zabrodsk/pneu007-business/blob/main/docs/business-registry.html) and [main README](https://github.com/zabrodsk/pneu007-business#readme).
+
+This repository is archived historical source. Its original documentation follows.
+
+---
+
 # Business Agent Registry
 
 A small directory that lets a business agent register its services and lets a customer agent discover suitable businesses. Built with TypeScript, Express and SQLite. Includes a bundled terminal client and a portable agent skill.
