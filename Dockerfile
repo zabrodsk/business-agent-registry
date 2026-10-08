@@ -1,0 +1,14 @@
+FROM node:22-bookworm-slim
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
+COPY package.json package-lock.json tsconfig.base.json ./
+COPY apps/registry/package.json apps/registry/
+COPY packages/agent-client/package.json packages/agent-client/
+RUN npm ci --no-audit --no-fund
+COPY apps/registry apps/registry
+COPY packages/agent-client packages/agent-client
+COPY skills skills
+RUN npm run build
+ENV NODE_ENV=production REGISTRY_DB_PATH=/data/registry.db
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD node -e "fetch('http://127.0.0.1:'+(process.env.REGISTRY_PORT||process.env.PORT||8792)+'/healthz').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+CMD ["node", "--import", "tsx", "apps/registry/src/server.ts"]
